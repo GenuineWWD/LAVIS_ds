@@ -15,7 +15,7 @@ from lavis.models.blip_models.blip_outputs import (
     BlipIntermediateOutput,
 )
 from lavis.models.med import XBertEncoder, XBertLMHeadDecoder
-from lavis.models.vit import VisionTransformerEncoder
+from lavis.models.vit import VisionTransformerEncoder 
 
 
 @registry.register_model("blip_vqa")
@@ -136,6 +136,8 @@ class BlipVQA(BlipBase):
         question_output = encoder_out
 
         for b, n in enumerate(samples["n_answers"]):
+            b=int(b)
+            n=int(n)
             question_states += [question_output.last_hidden_state[b]] * n
             question_atts += [question.attention_mask[b]] * n
 

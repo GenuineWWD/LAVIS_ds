@@ -1237,9 +1237,10 @@ class BertLMHeadModel(BertPreTrainedModel):
             labels = labels[:, 1:].contiguous()
             loss_fct = CrossEntropyLoss(reduction=reduction, label_smoothing=0.1)
             lm_loss = loss_fct(
-                shifted_prediction_scores.view(-1, self.config.vocab_size),
+                shifted_prediction_scores.view(-1, self.config.vocab_size).float(),
                 labels.view(-1),
             )
+            #lm_loss=lm_loss.half()
             if reduction == "none":
                 lm_loss = lm_loss.view(prediction_scores.size(0), -1).sum(1)
 

@@ -456,6 +456,7 @@ class RunnerBase:
             model_engine, optimizer, _, lr_scheduler_temp = deepspeed.initialize(model=self._model, config=ds_config, optimizer=self.optimizer)
             # model_engine_test, _, test_dataloader, _ = deepspeed.initialize(model=self._model_copy, config=test_ds_config,training_data=self.datasets["val"]) 
             
+
             self.ds_model = model_engine
             self.ds_optim = optimizer
             self.ds_lr_sch = lr_scheduler_temp
@@ -480,7 +481,8 @@ class RunnerBase:
         # resume from checkpoint if specified
         if not self.evaluate_only and self.resume_ckpt_path is not None:
             self._load_checkpoint(self.resume_ckpt_path)
-
+        import datetime    
+        ckpt_path = "ckpt/" + self.config.run_cfg.task + datetime.datetime.now().strftime('%m%d%H%M')
         for cur_epoch in range(self.start_epoch, self.max_epoch):
             # training phase
             if not self.evaluate_only:
@@ -499,7 +501,7 @@ class RunnerBase:
 
             #         # TODO : The dir of ckpt should be relative to the name of expriment
 
-                ckpt_path = "ckpt/" + self.config.run_cfg.task + str(self.config.config.datasets.keys())
+               # ckpt_path = "ckpt/" + self.config.run_cfg.task + str(self.config.config.datasets.keys())
                 self.ds_model.save_checkpoint(ckpt_path, cur_epoch)
 
                 # self.log_stats(val_log, split_name)

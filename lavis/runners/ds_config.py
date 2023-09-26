@@ -25,7 +25,7 @@ ds_config = {
   },
   
   "fp16": {
-      "enabled": False,
+      "enabled": True,
       "auto_cast": "auto",
       "loss_scale": 10,
       "initial_scale_power": 32,

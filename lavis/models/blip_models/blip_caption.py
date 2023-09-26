@@ -44,6 +44,11 @@ class BlipCaption(BlipBase):
 
         self.visual_encoder = image_encoder
         self.text_decoder = text_decoder #* XBertLMHeadDecoder
+        
+        # for name, param in self.text_decoder.named_parameters():
+        #     print(f"This is self.text_decoder")
+        #     print(f"The name now is {name}")
+        #     print(f"The params now is {param}")
 
         self.prompt = prompt #* "a picture of "
         self.prompt_length = len(self.tokenizer(self.prompt).input_ids) - 1
